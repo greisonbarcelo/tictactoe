@@ -21,7 +21,7 @@
             // this.container.appendChild(this.boardZeroZero);
         },
         // for displaying the starting / updated board
-        renderBoard: function(){   
+        renderBoard: function(){     
         },
         // checking who won the game for three consecutive token (x/o)
         checkWinner: function(player){
