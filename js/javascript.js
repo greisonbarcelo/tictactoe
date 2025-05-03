@@ -1,17 +1,68 @@
-let items = [
-    ["x",null,null],
-    [null,"x",null],
-    [null,null,"x"]
-];
+(function(){
+    const gameBoard = {
+        playerOne: 'x', 
+        playerTwo: 'o',
+        playerOneScore: 0,
+        playerTwoScore: 0,
 
-console.log(items);
-console.table(items);
+        // empty board setup 2d array with 3 rows, 3 columns
+        boardArray: [
+            [null,null,null],
+            [null,null,null],
+            [null,null,null]
+        ],
+        // initializes the control flow
+        init: function(){
+            this.cacheDom();
+        },
+        // storing the dom for one time selecting and reusability
+        cacheDom: function(){
+            this.container = document.querySelector(".container");
+            // console.log(this.container.textContent)
+        },
+        // for displaying the starting / updated board
+        renderBoard: function(){
 
-console.log(items[2][2]);
+        },
+        // checking who won the game for three consecutive token (x/o)
+        winnerLogic: function(player){
+            // diagonal wins
+            for (let i = 0; i <= 2; i++){
+                if (this.boardArray[0][0] === player && 
+                    this.boardArray[1][1] === player && 
+                    this.boardArray[2][2] === player) {
+                        return `${player} wins diagonal!`;
+                    }
+            }
+            // row wins
+            for (let i = 0; i <= 2; i++){
+                if (this.boardArray[i][0] === player && 
+                    this.boardArray[i][1] === player && 
+                    this.boardArray[i][2] === player) {
+                        return `${player} wins row!`;
+                    }
+            }
 
-if (items[0][0] === "x" 
-    && items[1][1] === "x"
-    && items[2][2] === "x"
-) {
-    console.log("x wins!");
-}
+            // column wins
+            for (let i = 0; i <= 2; i++){
+                if (this.boardArray[0][i] === player && 
+                    this.boardArray[1][i] === player && 
+                    this.boardArray[2][i] === player) {
+                        return `${player} wins column!`;
+                    }
+            }
+        }
+    }
+
+    // // for visualizing gameBoard
+    // // console.log(gameBoard.init());
+    // console.log(gameBoard)
+    gameBoard.boardArray[0][0] = gameBoard.playerOne;
+    console.table(gameBoard.boardArray);
+
+    console.log(gameBoard.winnerLogic("x"))
+
+})()
+
+// console.log(items[2][2]);
+
