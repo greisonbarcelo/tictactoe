@@ -2,8 +2,6 @@
     const gameBoard = {
         playerOne: 'x', 
         playerTwo: 'o',
-        playerOneScore: 0,
-        playerTwoScore: 0,
 
         // empty board setup 2d array with 3 rows, 3 columns
         boardArray: [
@@ -22,18 +20,15 @@
         },
         // for displaying the starting / updated board
         renderBoard: function(){
-
         },
         // checking who won the game for three consecutive token (x/o)
-        winnerLogic: function(player){
+        checkWinner: function(player){
             // diagonal wins
-            for (let i = 0; i <= 2; i++){
-                if (this.boardArray[0][0] === player && 
-                    this.boardArray[1][1] === player && 
-                    this.boardArray[2][2] === player) {
-                        return `${player} wins diagonal!`;
-                    }
-            }
+            if (this.boardArray[0][0] === player && 
+                this.boardArray[1][1] === player && 
+                this.boardArray[2][2] === player) {
+                    return `${player} wins diagonal!`;
+                }
             // row wins
             for (let i = 0; i <= 2; i++){
                 if (this.boardArray[i][0] === player && 
@@ -57,10 +52,13 @@
     // // for visualizing gameBoard
     // // console.log(gameBoard.init());
     // console.log(gameBoard)
-    gameBoard.boardArray[0][0] = gameBoard.playerOne;
+    gameBoard.boardArray[2][0] = gameBoard.playerOne;
+    gameBoard.boardArray[2][1] = gameBoard.playerOne;
+    gameBoard.boardArray[2][2] = gameBoard.playerOne;
+
     console.table(gameBoard.boardArray);
 
-    console.log(gameBoard.winnerLogic("x"))
+    console.log(gameBoard.checkWinner("x"))
 
 })()
 
