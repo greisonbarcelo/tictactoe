@@ -16,9 +16,9 @@
         // storing the dom for one time selecting and reusability, setting up display game board 
         cacheDom: function(){
             this.container = document.querySelector(".container");
-            this.boardZeroZero = document.createElement("div");
-            this.boardZeroZero.textContent = this.boardArray[0][0];
-            this.container.appendChild(this.boardZeroZero);
+            // this.boardZeroZero = document.createElement("div");
+            // this.boardZeroZero.textContent = this.boardArray[0][0];
+            // this.container.appendChild(this.boardZeroZero);
         },
         // for displaying the starting / updated board
         renderBoard: function(){
