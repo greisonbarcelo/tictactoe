@@ -13,10 +13,12 @@
         init: function(){
             this.cacheDom();
         },
-        // storing the dom for one time selecting and reusability
+        // storing the dom for one time selecting and reusability, setting up display game board 
         cacheDom: function(){
             this.container = document.querySelector(".container");
-            // console.log(this.container.textContent)
+            this.boardZeroZero = document.createElement("div");
+            this.boardZeroZero.textContent = this.boardArray[0][0];
+            this.container.appendChild(this.boardZeroZero);
         },
         // for displaying the starting / updated board
         renderBoard: function(){
@@ -46,18 +48,19 @@
                         return `${player} wins column!`;
                     }
             }
-        }
+        },
+
     }
 
     // // for visualizing gameBoard
     // // console.log(gameBoard.init());
     // console.log(gameBoard)
-    gameBoard.boardArray[2][0] = gameBoard.playerOne;
-    gameBoard.boardArray[2][1] = gameBoard.playerOne;
+    gameBoard.boardArray[0][0] = gameBoard.playerOne;
+    gameBoard.boardArray[1][1] = gameBoard.playerOne;
     gameBoard.boardArray[2][2] = gameBoard.playerOne;
 
     console.table(gameBoard.boardArray);
-
+    gameBoard.init()
     console.log(gameBoard.checkWinner("x"))
 
 })()
