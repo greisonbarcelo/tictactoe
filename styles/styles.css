@@ -5,17 +5,29 @@
 }
 
 .container {
+    padding: 12px;
     display: flex;
     /* background-color: aquamarine; */
     border: 1px solid red;
-    align-items: center;
-    justify-content: center;
+    /* align-items: center;
+    justify-content: center;     */
     gap: 16px;
     /* flex-wrap: wrap; */
-    flex: 1;
+    /* flex: 0; */
 }
 .container > * {
     /* margin-left: auto;
     margin-right: auto; */
-    border: 1px solid blue;
+    border: 2px solid blue;
+    flex: 1;
+    align-items: center;
+    justify-content: center;   
+    
+    display: flex;
+    flex-direction: column;
+    gap: 120px;
+
+}
+.container > div > * {
+    border: 2px solid blue;
 }
