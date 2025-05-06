@@ -1,3 +1,7 @@
+function Cell() {
+    return null
+}
+
 function GameBoard() {
     const rows = 3;
     const columns = 3;
@@ -6,10 +10,14 @@ function GameBoard() {
     for(let i = 1; i <= rows; i++) {
         board[i] = [];
         for(let j = 1; j <= columns; j++) {
-            board[i][j] = [];
+            board[i].push(Cell());
         }
     }
 
     return board
 }
-console.table(GameBoard());
+
+function GameController(playerOneName = "Player One", playerTwoName = "Player Two") {
+    return GameBoard();
+}
+console.table(GameController());
