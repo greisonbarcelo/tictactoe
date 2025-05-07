@@ -10,7 +10,7 @@ function GameBoard() {
     for(let i = 1; i <= rows; i++) {
         board[i] = [];
         for(let j = 1; j <= columns; j++) {
-            board[i].push(Cell());
+            board[i].push(Cell()); 
         }
     }
 
