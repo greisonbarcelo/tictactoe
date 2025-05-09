@@ -1,69 +1,97 @@
-(function(){
-    const gameBoard = {
-        playerOne: 'x', 
-        playerTwo: 'o',
+function Gameboard() {
+    const rows = 2;
+    const columns = 2;
+    const board = [];
 
-        // empty board setup 2d array with 3 rows, 3 columns
-        boardArray: [
-            [null,null,null],
-            [null,null,null],
-            [null,null,null]
-        ],
-        // initializes the control flow
-        init: function(){
-            this.cacheDom();
-        },
-        // storing the dom for one time selecting and reusability, setting up display game board 
-        cacheDom: function(){
-            this.container = document.querySelector(".container");
-            // this.boardZeroZero = document.createElement("div");
-            // this.boardZeroZero.textContent = this.boardArray[0][0];
-            // this.container.appendChild(this.boardZeroZero);
-        },
-        // for displaying the starting / updated board
-        renderBoard: function(){      
-        },
-        // checking who won the game for three consecutive token (x/o)
-        checkWinner: function(player){
-            // diagonal wins
-            if (this.boardArray[0][0] === player && 
-                this.boardArray[1][1] === player && 
-                this.boardArray[2][2] === player) {
-                    return `${player} wins diagonal!`;
-                }
-            // row wins
-            for (let i = 0; i <= 2; i++){
-                if (this.boardArray[i][0] === player && 
-                    this.boardArray[i][1] === player && 
-                    this.boardArray[i][2] === player) {
-                        return `${player} wins row!`;
-                    }
-            }
-
-            // column wins
-            for (let i = 0; i <= 2; i++){
-                if (this.boardArray[0][i] === player && 
-                    this.boardArray[1][i] === player && 
-                    this.boardArray[2][i] === player) {
-                        return `${player} wins column!`;
-                    }
-            }
-        },
-
+    for(let i = 0; i <= rows; i++) {
+        board[i] = [];
+        for(let j = 0; j <= columns; j++) {
+            board[i].push(Cell());
+        } 
     }
+    const getBoard = () => board;
 
-    // // for visualizing gameBoard
-    // // console.log(gameBoard.init());
-    // console.log(gameBoard)
-    gameBoard.boardArray[0][0] = gameBoard.playerOne;
-    gameBoard.boardArray[1][1] = gameBoard.playerOne;
-    gameBoard.boardArray[2][2] = gameBoard.playerOne;
+    const dropMarker = (column, player) => {
+        const availableCells = board.filter((row) => row[column].getValue() === 0).map(row => row[column]);
 
-    console.table(gameBoard.boardArray);
-    gameBoard.init()
-    console.log(gameBoard.checkWinner("x"))
+        if(!availableCells) return;
 
-})()
+        const lowestRow = availableCells.length - 1;
+        board[lowestRow][column].addMarker(player);
+    };
 
-// console.log(items[2][2]);
+    const printBoard = () => {
+        const boardWithCellValues = board.map((row) => row.map((cell) => cell.getValue()))
+        console.table(boardWithCellValues);
+    };
 
+
+
+    return {
+        getBoard, dropMarker, printBoard
+    };
+}
+
+function Cell() {
+    let value = 0;
+
+    const addMarker = (player) => {
+        value = player;
+    };
+
+    const getValue = () => value;
+
+    return {
+        addMarker, getValue
+    };
+}
+
+function GameController(playerOneName = "Player One", playerTwoName = "Player Two") {
+    const board = Gameboard();
+
+    const players = [
+        {
+            name: playerOneName,
+            token: 'x'
+        },
+        {
+            name: playerTwoName,
+            token: 'o'
+        }
+    ];
+
+    let activePlayer = players[0]
+
+    const switchPlayerTurn = () => {
+        activePlayer = activePlayer === players[0] ? players[1] : players[0];
+    };
+    const getActivePlayer = () => activePlayer;
+
+    const printNewRound = () => {
+        board.printBoard();
+        console.log(`${getActivePlayer().name}'s turn.`);
+    };
+
+    const playRound = (column) => {
+        console.log(
+            `Dropping ${getActivePlayer().name}'s token into column ${column}...`
+        );
+        board.dropMarker(column, getActivePlayer().token);
+
+        /*  This is where we would check for a winner and handle that logic,
+          such as a win message. */
+
+        switchPlayerTurn();
+        printNewRound();
+    };
+  printNewRound();  
+
+  return {
+    playRound, getActivePlayer
+  };       
+}
+
+const game = GameController();
+
+// game.playRound(1);
+// console.table(game.getBoard()) 
