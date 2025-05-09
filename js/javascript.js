@@ -94,4 +94,4 @@ function GameController(playerOneName = "Player One", playerTwoName = "Player Tw
 const game = GameController();
 
 // game.playRound(1);
-// console.table(game.getBoard())
+// console.table(game.getBoard()) 
