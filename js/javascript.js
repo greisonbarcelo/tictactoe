@@ -1,23 +1,24 @@
 function Gameboard() {
-    const rows = 2;
-    const columns = 2;
+    const rows = 3;
+    const columns = 3;
     const board = [];
 
-    for(let i = 0; i <= rows; i++) {
+    for(let i = 0; i < rows; i++) {
         board[i] = [];
-        for(let j = 0; j <= columns; j++) {
+        for(let j = 0; j < columns; j++) {
             board[i].push(Cell());
         } 
     }
     const getBoard = () => board;
 
-    const dropMarker = (column, player) => {
-        const availableCells = board.filter((row) => row[column].getValue() === 0).map(row => row[column]);
-
-        if(!availableCells) return;
-
-        const lowestRow = availableCells.length - 1;
-        board[lowestRow][column].addMarker(player);
+    const dropMarker = (row, column, player) => {
+        if (board[row][column].getValue() === 0) {
+            board[row][column].addMarker(player);
+            return true; 
+        } else {
+            console.log("Cell already occupied! Choose another one.");
+            return false; 
+        }
     };
 
     const printBoard = () => {
@@ -48,6 +49,7 @@ function Cell() {
 
 function GameController(playerOneName = "Player One", playerTwoName = "Player Two") {
     const board = Gameboard();
+    let gameOver = false;
 
     const players = [
         {
@@ -69,21 +71,38 @@ function GameController(playerOneName = "Player One", playerTwoName = "Player Tw
 
     const printNewRound = () => {
         board.printBoard();
+
+        if (gameOver) return;
         console.log(`${getActivePlayer().name}'s turn.`);
     };
 
-    const playRound = (column) => {
-        console.log(
-            `Dropping ${getActivePlayer().name}'s token into column ${column}...`
-        );
-        board.dropMarker(column, getActivePlayer().token);
+    // winner condition logic
+    const checkWinner = () => {
+        if ([0, 1, 2].every(i => board.getBoard()[i][i].getValue() === getActivePlayer().token)) {
+            console.log(`${getActivePlayer().name} wins diagonal!`);
+            gameOver = true;
+            printNewRound();
+            return; 
+        }
+    }
 
-        /*  This is where we would check for a winner and handle that logic,
-          such as a win message. */
+    const playRound = (row, column) => {
+        console.log(`Placing ${getActivePlayer().name}'s token at (${row}, ${column})...`);
+        
+        // If the move is invalid, let the same player try again
+        if (!board.dropMarker(row, column, getActivePlayer().token)) {
+            console.log(`${getActivePlayer().name}, try a different cell.`);
+            return; // Exit without switching turns
+        }
+        
+        checkWinner();
+        
 
+        // If the move is successful, switch player
         switchPlayerTurn();
         printNewRound();
     };
+
   printNewRound();  
 
   return {
@@ -93,5 +112,9 @@ function GameController(playerOneName = "Player One", playerTwoName = "Player Tw
 
 const game = GameController();
 
-game.playRound(1);
+game.playRound(0, 0);
+game.playRound(0, 1);
+game.playRound(1, 1);
+game.playRound(1, 0);
+game.playRound(2, 2);
 // console.table(game.getBoard()) 
