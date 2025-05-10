@@ -1,9 +1,67 @@
-* {
-    box-sizing: border-box;
-    padding: 0;
+/* Center entire page content */
+html, body {
+    height: 100%;
     margin: 0;
-}
-
-.container {
-    border: 1px solid red;
-}
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #eceff1; /* Light gray background */
+    font-family: 'Arial', sans-serif;
+  }
+  
+  /* Container for board and turn indicator */
+  .app-container {
+    text-align: center;
+  }
+  
+  /* Turn indicator styling */
+  .turn {
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    color: #424242; /* Dark gray text */
+  }
+  
+  /* Board styles */
+  .board {
+    position: relative;  /* Needed for absolute positioning of winning line */
+    display: grid;
+    height: 500px;
+    width: 500px;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    border: 4px solid #b0bec5; /* Soft dark border */
+    gap: 5px;
+    background-color: #ffffff;
+    padding: 5px;
+  }
+  
+  /* Cell styling */
+  .cell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3rem;
+    background: #fff8e1; /* Very light yellow */
+    border: 2px solid #b0bec5;
+    cursor: pointer;
+  }
+  
+  /* Marker Colors */
+  .x-marker {
+    color: #e91e63; /* Warm pinkish-red for X */
+  }
+  
+  .o-marker {
+    color: #3f51b5; /* Deep blue for O */
+  }
+  
+  /* Winning line styling */
+  .winning-line {
+    position: absolute;
+    height: 4px;
+    background-color: #4caf50; /* A refreshing green */
+    border-radius: 2px;
+    transform-origin: left center;
+    transition: transform 0.5s ease-in-out;
+  }
+  
