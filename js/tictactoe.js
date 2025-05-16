@@ -16,12 +16,6 @@ function GameBoard() {
     } 
 
     const getBoard = () => board;
-
-    // // checks a cell if the cell is availbale to drop a mark on
-    // function availableCells(row, column) {
-    //     // returns true if a cell is null
-    //     return board[row][column] === null;
-    // }
     
     // when a player takes turn, place their marker on the cell
     const dropMarker =(row, column, player) => {
@@ -33,7 +27,7 @@ function GameBoard() {
         // if the cell is empty, place players marker: x/o
         board[row][column] = player;
         console.table(board);
-        return board
+        return board;
     }
     
 
@@ -55,8 +49,30 @@ function GameBoard() {
     return { board, dropMarker };
 }
 
+function GameController(playerOneName = "Player One", playerTwoName = "Player Two") {
+    const board = GameBoard();
+
+    const players = [
+        {
+            name: playerOneName,
+            marker: 'X'
+        },
+        {
+            name: playerTwoName,
+            marker: 'O'
+        }
+    ];
+
+    let activePlayer = players[0];
+
+    const switchPlayers = () => {
+        activePlayer = activePlayer === players[0] ? players[1] : players[0];
+    }
+
+    const getActivePlayer = () => activePlayer;
+}
 
 
-const game = GameBoard();
-console.table(game.board);
-game.dropMarker(0, 0, 'x');
+// const game = GameBoard();
+// console.table(game.board);
+// game.dropMarker(0, 0, 'x');
