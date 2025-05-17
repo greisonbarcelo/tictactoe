@@ -77,6 +77,14 @@ function GameController(playerOneName = "Player One", playerTwoName = "Player Tw
                 console.log(`${getActivePlayer().name} '${board.board[0][column]}' wins in column ${column}!`);
             }
         }
+        // diagonal win checking
+        if (
+            (board.board.every((row, index) => row[index] === board.board[0][0] && row[index] !== null))
+            ||
+            (board.board.every((row, index) => row[board.board.length - 1 - index] === board.board[0][board.board.length - 1] && row[board.board.length - 1 - index] !== null))
+        ) {
+            console.log(`${getActivePlayer().name} wins diagonally!`);
+        }
     }
 
     // placing the marker on the empty available cell
@@ -116,19 +124,20 @@ game.getActivePlayer();
 // game.playRound(2, 2); // Player O moves
 // game.playRound(2, 1); // Player X moves (Bottom-center, vertical win)
 
-// // diagonal win /\
-// game.playRound(0, 0); // Player X moves (Top-left)
-// game.playRound(1, 2); // Player O moves
-// game.playRound(1, 1); // Player X moves (Center)
-// game.playRound(2, 2); // Player O moves
-// game.playRound(2, 0); // Player X moves (Bottom-left, diagonal win)
+// diagonal win /\
+game.playRound(0, 2); // Player X moves (Top-right)
+game.playRound(1, 0); // Player O moves
+game.playRound(1, 1); // Player X moves (Center)
+game.playRound(2, 2); // Player X moves (Bottom-right, diagonal win)
+game.playRound(2, 0); // Player O moves
 
-// win condition testing before putting inside gamecontroller
+// // win condition testing before putting inside gamecontroller
 // const board = [
-//     ['X', 'X', null],
+//     ['XA', 'X', 'X'],
 //     ['O', 'X', 'O'],
-//     ['X', 'X', 'O']
+//     ['X', 'O', 'X']
 // ];
+// console.table(board);
 // // horizontal
 // for (let row = 0; row < board.length; row++) {
 //     if (board[row].every(cell => cell === board[row][0] && cell !== null)) {
@@ -140,4 +149,17 @@ game.getActivePlayer();
 //     if (board.every(row => row[column] === board[0][column] && row[column] !== null)) {
 //         console.log(`Player '${board[0][column]}' wins in column ${column}!`);
 //     }
+// }
+
+// // diagonal 
+// if (
+//     (board.every((row, index) => row[index] === board[0][0] && row[index] !== null))
+//     ||
+//     (board.every((row, index) => row[board.length - 1 - index] === board[0][board.length - 1] && row[board.length - 1 - index] !== null))
+// ) {
+//     console.log(`Player '${board[0][0]}' wins diagonally!`);
+// }
+
+// if (board.every((row, index) => row[board.length - 1 - index] === board[0][board.length - 1] && row[board.length - 1 - index] !== null)) {
+//     console.log(`Player '${board[0][board.length - 1]}' wins diagonally (top-right to bottom-left)!`);
 // }
