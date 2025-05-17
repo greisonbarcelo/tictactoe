@@ -65,9 +65,16 @@ function GameController(playerOneName = "Player One", playerTwoName = "Player Tw
 
     const checkWinner = (player) => {
         console.log("Checking for winner..."); // Debugging log
+        // horizontal win checking -
         for (let row = 0; row < board.board.length; row++) {
             if (board.board[row].every(cell => cell === board.board[row][0] && cell !== null)) {
-                console.log( `Player '${board.board[row][0]}' wins in row ${row}!`);
+                console.log( `${getActivePlayer().name} '${board.board[row][0]}' wins in row ${row}!`);
+            }
+        }
+        // vertical win checking
+        for (let column = 0; column < board.board.length; column++) {
+            if (board.board.every(row => row[column] === board.board[0][column] && row[column] !== null)) {
+                console.log(`${getActivePlayer().name} '${board.board[0][column]}' wins in column ${column}!`);
             }
         }
     }
@@ -94,22 +101,43 @@ function GameController(playerOneName = "Player One", playerTwoName = "Player Tw
 
 const game = GameController();
 game.getActivePlayer();
-game.playRound(0, 0);
-game.playRound(1, 2);
-game.playRound(0, 2);
-game.playRound(1, 1);
-game.playRound(0, 1);
 
+// // horizontal win -
+// game.playRound(0, 0);
+// game.playRound(1, 2);
+// game.playRound(0, 2);
+// game.playRound(1, 1);
+// game.playRound(0, 1);
+
+// // vertical win |
+// game.playRound(0, 1); // Player X moves (Top-center)
+// game.playRound(1, 2); // Player O moves
+// game.playRound(1, 1); // Player X moves (Middle-center)
+// game.playRound(2, 2); // Player O moves
+// game.playRound(2, 1); // Player X moves (Bottom-center, vertical win)
+
+// // diagonal win /\
+// game.playRound(0, 0); // Player X moves (Top-left)
+// game.playRound(1, 2); // Player O moves
+// game.playRound(1, 1); // Player X moves (Center)
+// game.playRound(2, 2); // Player O moves
+// game.playRound(2, 0); // Player X moves (Bottom-left, diagonal win)
 
 // win condition testing before putting inside gamecontroller
 // const board = [
 //     ['X', 'X', null],
 //     ['O', 'X', 'O'],
-//     ['O', 'O', 'O']
+//     ['X', 'X', 'O']
 // ];
-
+// // horizontal
 // for (let row = 0; row < board.length; row++) {
 //     if (board[row].every(cell => cell === board[row][0] && cell !== null)) {
 //         console.log( `Player '${board[row][0]}' wins in row ${row}!`);
+//     }
+// }
+// // vertical
+// for (let column = 0; column < board.length; column++) {
+//     if (board.every(row => row[column] === board[0][column] && row[column] !== null)) {
+//         console.log(`Player '${board[0][column]}' wins in column ${column}!`);
 //     }
 // }
