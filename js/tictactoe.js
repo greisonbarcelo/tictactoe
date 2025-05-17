@@ -124,12 +124,12 @@ game.getActivePlayer();
 // game.playRound(2, 2); // Player O moves
 // game.playRound(2, 1); // Player X moves (Bottom-center, vertical win)
 
-// diagonal win /\
-game.playRound(0, 2); // Player X moves (Top-right)
-game.playRound(1, 0); // Player O moves
-game.playRound(1, 1); // Player X moves (Center)
-game.playRound(2, 2); // Player X moves (Bottom-right, diagonal win)
-game.playRound(2, 0); // Player O moves
+// // diagonal win /\
+// game.playRound(0, 2); // Player X moves (Top-right)
+// game.playRound(1, 0); // Player O moves
+// game.playRound(1, 1); // Player X moves (Center)
+// game.playRound(2, 2); // Player X moves (Bottom-right, diagonal win)
+// game.playRound(2, 0); // Player O moves
 
 // // win condition testing before putting inside gamecontroller
 // const board = [
