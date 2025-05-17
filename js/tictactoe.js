@@ -63,6 +63,15 @@ function GameController(playerOneName = "Player One", playerTwoName = "Player Tw
         console.log(`${getActivePlayer().name}'s turn.`);
     }
 
+    const checkWinner = (player) => {
+        console.log("Checking for winner..."); // Debugging log
+        for (let row = 0; row < board.board.length; row++) {
+            if (board.board[row].every(cell => cell === board.board[row][0] && cell !== null)) {
+                console.log( `Player '${board.board[row][0]}' wins in row ${row}!`);
+            }
+        }
+    }
+
     // placing the marker on the empty available cell
     const playRound = (row, column, activePlayer) => {
         console.log(`Placing ${getActivePlayer().name}'s token at (${row}, ${column})...`);
@@ -71,13 +80,14 @@ function GameController(playerOneName = "Player One", playerTwoName = "Player Tw
         board.dropMarker(row, column, getActivePlayer().marker);
 
         // check if someone won function here ...
+        checkWinner();
 
         switchPlayerTurn(); // switch player turn
         printNewRound();
     }
     printNewRound();
 
-    
+
     return { playRound, getActivePlayer }
 }
 
@@ -85,7 +95,21 @@ function GameController(playerOneName = "Player One", playerTwoName = "Player Tw
 const game = GameController();
 game.getActivePlayer();
 game.playRound(0, 0);
+game.playRound(1, 2);
+game.playRound(0, 2);
+game.playRound(1, 1);
+game.playRound(0, 1);
 
 
-// console.table(game.board);
-// game.dropMarker(0, 0, 'x');
+// win condition testing before putting inside gamecontroller
+// const board = [
+//     ['X', 'X', null],
+//     ['O', 'X', 'O'],
+//     ['O', 'O', 'O']
+// ];
+
+// for (let row = 0; row < board.length; row++) {
+//     if (board[row].every(cell => cell === board[row][0] && cell !== null)) {
+//         console.log( `Player '${board[row][0]}' wins in row ${row}!`);
+//     }
+// }
