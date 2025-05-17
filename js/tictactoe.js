@@ -85,6 +85,10 @@ function GameController(playerOneName = "Player One", playerTwoName = "Player Tw
         ) {
             console.log(`${getActivePlayer().name} wins diagonally!`);
         }
+        // Check if the board is full and no winner is found
+        if (board.board.every(row => row.every(cell => cell !== null))) {
+            console.log("It's a draw!");
+        }
     }
 
     // placing the marker on the empty available cell
@@ -130,6 +134,20 @@ game.getActivePlayer();
 // game.playRound(1, 1); // Player X moves (Center)
 // game.playRound(2, 2); // Player X moves (Bottom-right, diagonal win)
 // game.playRound(2, 0); // Player O moves
+
+// Test play for no winner (draw)
+game.playRound(0, 0); // Move 1: X moves at (0,0)
+game.playRound(0, 1); // Move 2: O moves at (0,1)
+game.playRound(0, 2); // Move 3: X moves at (0,2)
+game.playRound(1, 2); // Move 4: O moves at (1,2)
+game.playRound(1, 0); // Move 5: X moves at (1,0)
+game.playRound(2, 0); // Move 6: O moves at (2,0)
+game.playRound(1, 1); // Move 7: X moves at (1,1)
+game.playRound(2, 2); // Move 8: O moves at (2,2)
+game.playRound(2, 1); // Move 9: X moves at (2,1) – Final move (board full)
+
+
+
 
 // // win condition testing before putting inside gamecontroller
 // const board = [
