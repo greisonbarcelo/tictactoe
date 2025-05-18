@@ -4,13 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TicTacToe</title>
-    <link rel="stylesheet" href="./styles/styles.css">
-    <script src="./js/javascript.js" defer></script>
+    <link rel="stylesheet" href="./styles/tictactoe.css">
+    <script src="./js/tictactoe.js" defer></script>
 </head>
 <body>
-    <div class="app-container">
-        <div class="turn"></div>
+    <header>
+        <h1>Tic-Tac-Toe</h1>
+    </header>
+
+    <div class="game-container">
+        <div class="turn">Player X's Turn</div>
         <div class="board"></div>
-      </div> 
+        <button id="reset">Restart Game</button>
+    </div>
+
+    <footer>
+        <p>Developed by <span id="username"><a href="https://github.com/greisonbarcelo">greisonbarcelo</a></span></p>
+    </footer>
 </body>
 </html>

@@ -1,0 +1,115 @@
+/* General styling */
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* Prevent scrolling */
+    height: 100vh; /* Keep content fixed within the viewport */
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background-color: #f0f4f8;
+    color: #333;
+}
+
+/* Header styling (smaller & fixed) */
+header {
+    background-color: #0077b6;
+    color: white;
+    padding: 10px;
+    font-size: 20px; /* Smaller header */
+    position: fixed;
+    top: 0;
+    width: 100%;
+    text-align: center;
+}
+
+/* Footer styling (pinned at bottom) */
+footer {
+    background-color: #0077b6;
+    color: white;
+    padding: 10px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+}
+
+/* Centered game container */
+.game-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - 100px); /* Adjust for header and footer */
+    padding-top: 60px; /* Ensure elements aren't hidden under header */
+}
+
+/* Rounded game board */
+.board {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    grid-template-rows: repeat(3, 100px);
+    gap: 8px;
+    background-color: #ffffff;
+    padding: 10px;
+    border-radius: 15px; /* Rounded edges */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Rounded cells */
+.cell {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    background-color: #90e0ef;
+    border-radius: 12px; /* Rounded edges */
+    cursor: pointer;
+    transition: background 0.3s ease; /* Smooth hover effect */
+}
+
+.cell:hover {
+    background-color: #48cae4; /* Slight color change on hover */
+}
+
+/* Turn display */
+.turn {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    font-weight: bold;
+}
+
+/* Restart button */
+#reset {
+    margin-top: 15px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    border: none;
+    background-color: #0077b6;
+    color: white;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background 0.3s ease;
+}
+
+#reset:hover {
+    background-color: #005f8d;
+}
+
+a:link {
+    text-decoration: none;
+    color: inherit;
+    text-decoration: underline;
+}
+
+a:visited {
+    text-decoration: none;
+    color: inherit;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+a:active {
+    text-decoration: underline;
+}
