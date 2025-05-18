@@ -32,87 +32,114 @@ function GameBoard() {
     }
 
 
-    return { board, dropMarker, printBoard };
+    return { board, dropMarker, printBoard, getBoard };
 }
 
 function GameController(playerOneName = "Player One", playerTwoName = "Player Two") {
     const board = GameBoard();
-    
-    const players = [ // define player's name and marker
-        {
-            name: playerOneName,
-            marker: 'X'
-        },
-        {
-            name: playerTwoName,
-            marker: 'O'
-        }
+    let gameOver = false; // Keep track of game state
+
+    const players = [
+        { name: playerOneName, marker: "X" },
+        { name: playerTwoName, marker: "O" }
     ];
 
-    let activePlayer = players[0]; // default first player is playerOne = x
+    let activePlayer = players[0];
 
-    const switchPlayerTurn = () => { // function to switch turns
+    const switchPlayerTurn = () => {
         activePlayer = activePlayer === players[0] ? players[1] : players[0];
-    }
+    };
 
-    const getActivePlayer = () => activePlayer; // get who is the latest turn it is
+    const getActivePlayer = () => activePlayer;
 
-    const printNewRound = () => {
-        board.printBoard();
+    const checkWinner = () => {
+        let winner = null;
 
-        console.log(`${getActivePlayer().name}'s turn.`);
-    }
-
-    const checkWinner = (player) => {
-        console.log("Checking for winner..."); // Debugging log
-        // horizontal win checking -
+        // Horizontal win check
         for (let row = 0; row < board.board.length; row++) {
             if (board.board[row].every(cell => cell === board.board[row][0] && cell !== null)) {
-                console.log( `${getActivePlayer().name} '${board.board[row][0]}' wins in row ${row}!`);
+                winner = activePlayer.name;
             }
         }
-        // vertical win checking
+
+        // Vertical win check
         for (let column = 0; column < board.board.length; column++) {
             if (board.board.every(row => row[column] === board.board[0][column] && row[column] !== null)) {
-                console.log(`${getActivePlayer().name} '${board.board[0][column]}' wins in column ${column}!`);
+                winner = activePlayer.name;
             }
         }
-        // diagonal win checking
+
+        // Diagonal win check
         if (
-            (board.board.every((row, index) => row[index] === board.board[0][0] && row[index] !== null))
-            ||
-            (board.board.every((row, index) => row[board.board.length - 1 - index] === board.board[0][board.board.length - 1] && row[board.board.length - 1 - index] !== null))
+            board.board.every((row, index) => row[index] === board.board[0][0] && row[index] !== null) ||
+            board.board.every((row, index) => row[board.board.length - 1 - index] === board.board[0][board.board.length - 1] && row[board.board.length - 1 - index] !== null)
         ) {
-            console.log(`${getActivePlayer().name} wins diagonally!`);
+            winner = activePlayer.name;
         }
-        // Check if the board is full and no winner is found
-        if (board.board.every(row => row.every(cell => cell !== null))) {
-            console.log("It's a draw!");
+
+        // Draw check
+        if (!winner && board.board.every(row => row.every(cell => cell !== null))) {
+            winner = "Draw";
         }
-    }
 
-    // placing the marker on the empty available cell
-    const playRound = (row, column, activePlayer) => {
-        console.log(`Placing ${getActivePlayer().name}'s token at (${row}, ${column})...`);
+        if (winner) {
+            gameOver = true;
+        }
 
-        // calls GameBoard drop marker function to add a marker on active player's chosen cell
+        return winner;
+    };
+
+    // Play a round for both console and UI versions
+    const playRound = (row, column, renderBoardCallback = null, turnDisplay = null) => {
+        if (gameOver) return; // Stop moves if game has ended
+    
         board.dropMarker(row, column, getActivePlayer().marker);
+    
+        const winner = checkWinner();
+    
+        // Live console update per turn
+        board.printBoard();
+        console.log(`${getActivePlayer().name}'s turn.`);
+    
+        if (renderBoardCallback) {
+            renderBoardCallback();
+        }
+    
+        if (winner) {
+            gameOver = true;
+            if (turnDisplay) {
+                turnDisplay.textContent = winner === "Draw" ? "It's a draw!" : `${winner} wins!`;
+            }
+    
+            // Console log winner
+            console.log(winner === "Draw" ? "It's a draw!" : `${winner} wins!`);
+           } else {
+            switchPlayerTurn();
+        }
+    };
+    
+    
 
-        // check if someone won function here ...
-        checkWinner();
+    const restartGame = () => {
+        board.board.forEach(row => row.fill(null)); // Reset board state
+        gameOver = false;
+        activePlayer = players[0]; // Reset player turn
+    
+        console.clear(); // Clear console for fresh game start
+        console.log("Game restarted.");
+        board.printBoard();
+    };
+    
 
-        switchPlayerTurn(); // switch player turn
-        printNewRound();
-    }
-    printNewRound();
-
-
-    return { playRound, getActivePlayer }
+    return { playRound, getActivePlayer, checkWinner, getBoard: board.getBoard, restartGame };
 }
 
 
-const game = GameController();
-game.getActivePlayer();
+
+
+
+// const game = GameController();
+// game.getActivePlayer();
 
 // // horizontal win -
 // game.playRound(0, 0);
@@ -135,15 +162,62 @@ game.getActivePlayer();
 // game.playRound(2, 2); // Player X moves (Bottom-right, diagonal win)
 // game.playRound(2, 0); // Player O moves
 
-// Test play for no winner (draw)
-game.playRound(0, 0); // Move 1: X moves at (0,0)
-game.playRound(0, 1); // Move 2: O moves at (0,1)
-game.playRound(0, 2); // Move 3: X moves at (0,2)
-game.playRound(1, 2); // Move 4: O moves at (1,2)
-game.playRound(1, 0); // Move 5: X moves at (1,0)
-game.playRound(2, 0); // Move 6: O moves at (2,0)
-game.playRound(1, 1); // Move 7: X moves at (1,1)
-game.playRound(2, 2); // Move 8: O moves at (2,2)
-game.playRound(2, 1); // Move 9: X moves at (2,1) – Final move (board full)
+// // Test play for no winner (draw)
+// game.playRound(0, 0); // Move 1: X moves at (0,0)
+// game.playRound(0, 1); // Move 2: O moves at (0,1)
+// game.playRound(0, 2); // Move 3: X moves at (0,2)
+// game.playRound(1, 2); // Move 4: O moves at (1,2)
+// game.playRound(1, 0); // Move 5: X moves at (1,0)
+// game.playRound(2, 0); // Move 6: O moves at (2,0)
+// game.playRound(1, 1); // Move 7: X moves at (1,1)
+// game.playRound(2, 2); // Move 8: O moves at (2,2)
+// game.playRound(2, 1); // Move 9: X moves at (2,1) – Final move (board full)
 
+
+document.addEventListener("DOMContentLoaded", () => {
+    const boardElement = document.querySelector(".board");
+    const turnDisplay = document.querySelector(".turn");
+    const resetButton = document.getElementById("reset"); // Add restart button
+    const game = GameController(); 
+
+    const renderBoard = () => {
+        boardElement.innerHTML = ""; 
+        const board = game.getBoard();
+
+        board.forEach((row, rowIndex) => {
+            row.forEach((cell, colIndex) => {
+                const cellElement = document.createElement("div");
+                cellElement.classList.add("cell");
+                cellElement.dataset.row = rowIndex;
+                cellElement.dataset.column = colIndex;
+                cellElement.textContent = cell !== null ? cell : "";
+                cellElement.addEventListener("click", handleCellClick);
+                boardElement.appendChild(cellElement);
+            });
+        });
+
+        turnDisplay.textContent = `${game.getActivePlayer().name}'s turn (${game.getActivePlayer().marker})`;
+    };
+
+    // Handle cell clicks
+    const handleCellClick = (event) => {
+        const row = event.target.dataset.row;
+        const column = event.target.dataset.column;
+
+        if (event.target.textContent !== "") return;
+
+        game.playRound(Number(row), Number(column), renderBoard, turnDisplay);
+
+        if (game.checkWinner()) {
+            boardElement.removeEventListener("click", handleCellClick); 
+        }
+    };
+
+    resetButton.addEventListener("click", () => {
+        game.restartGame();
+        renderBoard();
+    });
+
+    renderBoard();
+});
 
