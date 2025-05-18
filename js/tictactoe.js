@@ -147,37 +147,3 @@ game.playRound(2, 2); // Move 8: O moves at (2,2)
 game.playRound(2, 1); // Move 9: X moves at (2,1) – Final move (board full)
 
 
-
-
-// // win condition testing before putting inside gamecontroller
-// const board = [
-//     ['XA', 'X', 'X'],
-//     ['O', 'X', 'O'],
-//     ['X', 'O', 'X']
-// ];
-// console.table(board);
-// // horizontal
-// for (let row = 0; row < board.length; row++) {
-//     if (board[row].every(cell => cell === board[row][0] && cell !== null)) {
-//         console.log( `Player '${board[row][0]}' wins in row ${row}!`);
-//     }
-// }
-// // vertical
-// for (let column = 0; column < board.length; column++) {
-//     if (board.every(row => row[column] === board[0][column] && row[column] !== null)) {
-//         console.log(`Player '${board[0][column]}' wins in column ${column}!`);
-//     }
-// }
-
-// // diagonal 
-// if (
-//     (board.every((row, index) => row[index] === board[0][0] && row[index] !== null))
-//     ||
-//     (board.every((row, index) => row[board.length - 1 - index] === board[0][board.length - 1] && row[board.length - 1 - index] !== null))
-// ) {
-//     console.log(`Player '${board[0][0]}' wins diagonally!`);
-// }
-
-// if (board.every((row, index) => row[board.length - 1 - index] === board[0][board.length - 1] && row[board.length - 1 - index] !== null)) {
-//     console.log(`Player '${board[0][board.length - 1]}' wins diagonally (top-right to bottom-left)!`);
-// }
