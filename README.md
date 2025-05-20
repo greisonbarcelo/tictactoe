@@ -18,5 +18,5 @@ A simple Tic-Tac-Toe game built with HTML, CSS, and JavaScript.
 
 ## Possible Feature to add
 
-- Computer/AI/Algorithm Opponent for single players.
+- Computer/AI/Algorithm Opponent for single players
 - Computer/AI/Algorithm opponent difficulty like easy/medium/hard/unbeatable  
