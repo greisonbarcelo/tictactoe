@@ -13,7 +13,7 @@ A simple Tic-Tac-Toe game built with HTML, CSS, and JavaScript.
 ## Technologies Used
 
 - HTML for structure
-- CSS for styling and layout
+- CSS for styling and layout 
 - JavaScript for game logic
 
 ## Possible Feature Path
